@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lova — Admin Templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #FAF9F7;
+    --card: #FFFFFF;
+    --primary: #C94D7C;
+    --primary-light: #F2D5E0;
+    --primary-soft: #FDF0F4;
+    --text: #1A1A1A;
+    --text-muted: #8A8A8A;
+    --text-light: #B0B0B0;
+    --border: #E8E4DE;
+    --muted-bg: #F5F3F0;
+    --green: #2ABFAB;
+    --green-soft: #E6F9F5;
+    --radius: 16px;
+    --radius-sm: 12px;
+    --radius-xs: 8px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+    --transition: 0.2s ease;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* === TOP BAR === */
+  .topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .topbar-logo {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary), #E87EA1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  .topbar-title {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .topbar-title span {
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-left: 0.3rem;
+  }
+
+  .badge-count {
+    padding: 0.2rem 0.65rem;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* === TOOLBAR === */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-box {
+    flex: 1;
+    position: relative;
+  }
+
+  .search-box svg {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    color: var(--text-light);
+    pointer-events: none;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 0.6rem 0.85rem 0.6rem 2.4rem;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.88rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search-box input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+
+  .search-box input::placeholder { color: var(--text-light); }
+
+  .sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    background: var(--card);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+    white-space: nowrap;
+  }
+
+  .sort-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+  .sort-btn svg { width: 14px; height: 14px; }
+
+  /* === TEMPLATE CARDS === */
+  .tpl-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .tpl-card {
+    background: var(--card);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all var(--transition);
+    animation: cardIn 0.3s ease backwards;
+  }
+
+  .tpl-card:hover {
+    box-shadow: var(--shadow);
+    border-color: var(--primary-light);
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tpl-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    gap: 1rem;
+  }
+
+  .tpl-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tpl-name {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tpl-meta {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.15rem;
+  }
+
+  .tpl-meta strong {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .tpl-preview-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tpl-chevron {
+    width: 20px;
+    height: 20px;
+    color: var(--text-light);
+    flex-shrink: 0;
+    transition: transform var(--transition);
+  }
+
+  .tpl-card.open .tpl-chevron { transform: rotate(180deg); }
+
+  /* === EXPANDED === */
+  .tpl-body-wrap {
+    display: none;
+    padding: 0 1.25rem 1.15rem;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .tpl-card.open .tpl-body-wrap { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .tpl-body {
+    background: var(--muted-bg);
+    border-radius: var(--radius-xs);
+    padding: 1rem 1.15rem;
+    font-size: 0.84rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text);
+    max-height: 350px;
+    overflow-y: auto;
+  }
+
+  .tpl-actions {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+  }
+
+  .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    color: var(--text-muted);
+  }
+
+  .btn-sm:hover { border-color: var(--primary-light); color: var(--primary); }
+  .btn-sm.danger:hover { border-color: #F5C6C6; color: #D9534F; background: #FFF8F8; }
+  .btn-sm svg { width: 13px; height: 13px; }
+
+  /* === EMPTY === */
+  .empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .empty-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 0.85rem;
+    background: var(--primary-soft);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .empty-icon svg { width: 22px; height: 22px; color: var(--primary); }
+
+  .empty h3 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .empty p { font-size: 0.82rem; color: var(--text-muted); }
+
+  /* === TOAST === */
+  .toast-wrap {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+
+  .toast {
+    padding: 0.7rem 1.15rem;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: var(--radius-xs);
+    font-size: 0.82rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: toastUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+  }
+
+  .toast.out { animation: toastOut 0.25s ease forwards; }
+  .toast svg { width: 14px; height: 14px; color: var(--green); flex-shrink: 0; }
+
+  @keyframes toastUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes toastOut {
+    to { opacity: 0; transform: translateY(6px); }
+  }
+
+  @media (max-width: 600px) {
+    .topbar { padding: 0.75rem 1rem; }
+    .container { padding: 1.25rem 1rem 3rem; }
+    .toolbar { flex-direction: column; }
+    .tpl-preview-text { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">L</div>
+    <span class="topbar-title">Templates <span>Admin</span></span>
+  </div>
+  <span class="badge-count" id="countBadge">0</span>
+</div>
+
+<div class="container">
+  <div class="toolbar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar por nombre, autor o contenido...">
+    </div>
+    <button class="sort-btn" id="sortBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+      Recientes
+    </button>
+  </div>
+
+  <div id="tplList" class="tpl-list"></div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+(function() {
+  const SUPABASE_URL = 'https://niazzydglinpzfnadesf.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pYXp6eWRnbGlucHpmbmFkZXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3NDk2OTQsImV4cCI6MjA4NDMyNTY5NH0.9H4XViOrrlJsn3YrhaBFQw1NRO5PYE_aNkjA9PDsqKM';
+  const API = `${SUPABASE_URL}/rest/v1/email_templates`;
+  const headers = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json'
+  };
+
+  let templates = [];
+  let searchQuery = '';
+  let expandedId = null;
+  let sortAsc = false;
+
+  const listEl = document.getElementById('tplList');
+  const countBadge = document.getElementById('countBadge');
+
+  async function load() {
+    try {
+      const res = await fetch(`${API}?order=created_at.desc`, { headers });
+      if (!res.ok) throw new Error();
+      templates = await res.json();
+      countBadge.textContent = templates.length;
+      render();
+    } catch { listEl.innerHTML = '<div class="empty"><p>Error al cargar</p></div>'; }
+  }
+
+  async function del(id) {
+    if (!confirm('¿Eliminar este template?')) return;
+    try {
+      await fetch(`${API}?id=eq.${id}`, { method: 'DELETE', headers });
+      templates = templates.filter(t => t.id !== id);
+      countBadge.textContent = templates.length;
+      if (expandedId === id) expandedId = null;
+      render();
+      toast('Eliminado');
+    } catch { toast('Error'); }
+  }
+
+  function toast(msg) {
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${esc(msg)}`;
+    document.getElementById('toastWrap').appendChild(el);
+    setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 250); }, 2200);
+  }
+
+  function getFiltered() {
+    let list = [...templates];
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter(t =>
+        t.name.toLowerCase().includes(q) ||
+        t.body.toLowerCase().includes(q) ||
+        t.author.toLowerCase().includes(q)
+      );
+    }
+    if (sortAsc) list.reverse();
+    return list;
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function escA(s) { return s.replace(/[&"'<>]/g, c => ({'&':'&amp;','"':'&quot;',"'":'&#39;','<':'&lt;','>':'&gt;'}[c])); }
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    const m = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return `${d.getDate()} ${m[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+
+  function truncate(s, n) { return s.length <= n ? s : s.substring(0, n).trimEnd() + '...'; }
+
+  function render() {
+    const filtered = getFiltered();
+
+    if (filtered.length === 0) {
+      listEl.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <h3>${templates.length === 0 ? 'Sin templates todav\u00eda' : 'Sin resultados'}</h3>
+          <p>${templates.length === 0 ? 'Los SDRs a\u00fan no han enviado templates.' : 'Prueba con otros t\u00e9rminos.'}</p>
+        </div>`;
+      return;
+    }
+
+    listEl.innerHTML = filtered.map((t, i) => {
+      const open = expandedId === t.id;
+      return `
+        <div class="tpl-card ${open ? 'open' : ''}" style="animation-delay:${i * 0.03}s">
+          <div class="tpl-header" onclick="window.__t('${escA(t.id)}')">
+            <div class="tpl-info">
+              <div class="tpl-name">${esc(t.name)}</div>
+              <div class="tpl-meta"><strong>${esc(t.author)}</strong> &middot; ${fmtDate(t.created_at)}</div>
+              <div class="tpl-preview-text">${esc(truncate(t.body, 100))}</div>
+            </div>
+            <svg class="tpl-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="tpl-body-wrap">
+            <div class="tpl-body">${esc(t.body)}</div>
+            <div class="tpl-actions">
+              <button class="btn-sm" onclick="window.__c('${escA(t.id)}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copiar
+              </button>
+              <button class="btn-sm danger" onclick="window.__d('${escA(t.id)}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // TOGGLE
+  window.__t = function(id) { expandedId = expandedId === id ? null : id; render(); };
+
+  // COPY
+  window.__c = function(id) {
+    const t = templates.find(x => x.id === id);
+    if (!t) return;
+    navigator.clipboard.writeText(t.body).then(() => toast('Copiado')).catch(() => {
+      const ta = document.createElement('textarea'); ta.value = t.body;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      toast('Copiado');
+    });
+  };
+
+  // DELETE
+  window.__d = function(id) { del(id); };
+
+  // SEARCH
+  document.getElementById('searchInput').addEventListener('input', function() {
+    searchQuery = this.value.trim();
+    expandedId = null;
+    render();
+  });
+
+  // SORT
+  document.getElementById('sortBtn').addEventListener('click', function() {
+    sortAsc = !sortAsc;
+    this.innerHTML = sortAsc
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg> Antiguos'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg> Recientes';
+    render();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
