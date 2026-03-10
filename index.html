@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lova — Template Collection</title>
+<title>Lova — Colección de Plantillas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -277,29 +277,29 @@
   <header class="header">
     <div class="lova-badge">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      Template Collection
+      Colección de Plantillas
     </div>
-    <h1>Inviaci i tuoi <span>template</span></h1>
-    <p>Incolla i template email che usi nelle tue campagne outbound. Sceglieremo i migliori per Lova.</p>
+    <h1>Envíanos tus <span>plantillas</span></h1>
+    <p>Pega las plantillas de email que usas en tus campañas outbound. Elegiremos las mejores para Lova.</p>
   </header>
 
   <div class="form-card">
     <form id="tplForm" autocomplete="off">
       <div class="field-row">
         <div class="field-group">
-          <label for="author">Il tuo nome</label>
-          <input type="text" id="author" placeholder="Mario Rossi" required>
+          <label for="author">Tu nombre</label>
+          <input type="text" id="author" placeholder="Juan Pérez" required>
         </div>
         <div class="field-group">
-          <label for="tplName">Nome del template</label>
-          <input type="text" id="tplName" placeholder="es. Follow-up post demo" required>
+          <label for="tplName">Nombre de la plantilla</label>
+          <input type="text" id="tplName" placeholder="ej. Follow-up post demo" required>
         </div>
       </div>
-      <label for="tplBody">Template email</label>
-      <textarea id="tplBody" placeholder="Incolla qui il tuo template completo...&#10;&#10;Oggetto: [Il tuo oggetto]&#10;&#10;Ciao {nome},&#10;&#10;Ho visto che la vostra azienda...&#10;&#10;Saresti disponibile per una breve call?&#10;&#10;Grazie,&#10;{firma}" required></textarea>
+      <label for="tplBody">Plantilla de email</label>
+      <textarea id="tplBody" placeholder="Pega aquí tu plantilla completa...&#10;&#10;Asunto: [Tu asunto]&#10;&#10;Hola {nombre},&#10;&#10;He visto que vuestra empresa...&#10;&#10;¿Estarías disponible para una breve llamada?&#10;&#10;Gracias,&#10;{firma}" required></textarea>
       <button type="submit" class="btn-submit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Invia template
+        Enviar plantilla
       </button>
     </form>
 
@@ -307,9 +307,9 @@
       <div class="success-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h2>Template inviato!</h2>
-      <p>Grazie per il contributo. Il team lo valuterà per includerlo in Lova.</p>
-      <button class="btn-another" id="btnAnother">Invia un altro template</button>
+      <h2>¡Plantilla enviada!</h2>
+      <p>Gracias por tu contribución. El equipo la evaluará para incluirla en Lova.</p>
+      <button class="btn-another" id="btnAnother">Enviar otra plantilla</button>
     </div>
   </div>
 
@@ -335,7 +335,7 @@
     e.preventDefault();
     const btn = form.querySelector('.btn-submit');
     btn.disabled = true;
-    btn.textContent = 'Invio...';
+    btn.textContent = 'Enviando...';
     try {
       const res = await fetch(API, {
         method: 'POST', headers,
@@ -352,10 +352,10 @@
       form.style.display = 'none';
       success.classList.add('show');
     } catch {
-      alert('Errore nell\'invio. Riprova.');
+      alert('Error al enviar. Inténtalo de nuevo.');
     } finally {
       btn.disabled = false;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Invia template';
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar plantilla';
     }
   });
 
